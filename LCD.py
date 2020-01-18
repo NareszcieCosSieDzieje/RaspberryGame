@@ -289,10 +289,19 @@ mainLcd.lcd_display_string("Got to level: " + str(lvl) + "and" + str(text = "won
 
 score = (level*100)/(timer_b-timer_a) 
 
-sql = ("UPDATE players SET score = %s, tdate = CURRENT_DATE() WHERE pID = %s")
-val = (score, last_id) 
+
+sql = ("SELECT * from players WHERE pID = %s")
+val = (last_id) 
+record = 0
 with db:
 	curs.execute(sql, val)
+	record = cursor.fetchone()
+
+if score > record[1]:
+	sql = ("UPDATE players SET score = %s, tdate = CURRENT_DATE() WHERE pID = %s")
+	val = (score, last_id) 
+	with db:
+		curs.execute(sql, val)
 
 db.commit()
 db.close()
