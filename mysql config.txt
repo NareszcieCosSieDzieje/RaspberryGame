@@ -1,0 +1,15 @@
+sudo apt-get install mysql-server python-mysqldb
+
+mysql -u root -p
+Enter password:
+mysql> CREATE DATABASE players
+mysql> USE players
+
+mysql> CREATE USER 'game'@'localhost' IDENTIFIED BY 'password';
+mysql> GRANT ALL PRIVILEGES ON players.* TO 'game'@'localhost'
+mysql> FLUSH PRIVILEGES;
+mysql> quit
+
+mysql -u game -p
+
+CREATE TABLE scores (pID TINYINT NOT NULL AUTO_INCREMENT, score DOUBLE, tdate DATE );
